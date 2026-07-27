@@ -1,0 +1,20 @@
+name        = "umr"
+label       = "Connectivity"
+version     = "0.2.0"
+api_version = "1"
+language    = "go"
+entrypoint  = "waypoint-module-umr"
+provides    = ["uplink"]
+
+[permissions]
+publish   = ["waypoint.*.module.umr.stats", "waypoint.*.module.umr.uplink"]
+subscribe = ["waypoint.*.module.umr.health.ready"]
+
+[health]
+probe      = "ready"
+interval_s = 5
+timeout_s  = 2
+
+[ui.static]
+tab_id = "m-umr"
+bundle = "/dashboard/panel.js"

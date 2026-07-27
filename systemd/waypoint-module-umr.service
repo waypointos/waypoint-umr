@@ -1,0 +1,24 @@
+[Unit]
+Description=Waypoint module - umr (Ubiquiti Mobile Router connectivity)
+After=waypoint-agent.service
+Requires=waypoint-agent.service
+
+[Service]
+Type=notify
+# WAYPOINT_ROVER_ID is provided by the agent's core.env (dev: /etc/waypoint,
+# real hardware: /data/waypoint). The agent (re)populates /run/waypoint/modules/umr/
+# before starting this unit, so config.toml + creds.env exist at exec time.
+Environment=WAYPOINT_ROVER_ID=
+EnvironmentFile=-/etc/waypoint/core.env
+EnvironmentFile=-/data/waypoint/core.env
+ExecStart=/usr/bin/waypoint-module-umr \
+  --config /run/waypoint/modules/umr/config.toml \
+  --creds  /run/waypoint/modules/umr/creds.env \
+  --rover  ${WAYPOINT_ROVER_ID}
+Restart=always
+RestartSec=2s
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

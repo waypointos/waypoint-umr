@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package waypoint.module.umr.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/waypointos/waypoint-umr/protocol/gen/go;umrv1";
+
+message UmrStats {
+  google.protobuf.Timestamp t = 1;
+
+  Device     device     = 2;
+  Wan        wan        = 3;
+  Throughput throughput = 4;
+  System     system     = 5;
+  repeated Client clients = 6;
+
+  message Device {
+    optional string mac      = 1;
+    optional string model    = 2;
+    optional string firmware = 3;
+    optional int32  uptime_s = 4;
+    bool            online   = 5;
+  }
+
+  message Wan {
+    optional string active       = 1;
+    optional string external_ip  = 2;
+    optional string external_isp = 3;
+    optional WifiWan wifi       = 4;
+    optional Lte     lte        = 5;
+    optional Ethernet ethernet  = 6;
+  }
+
+  message WifiWan {
+    optional string ssid        = 1;
+    optional int32  signal_bars = 2;
+    optional int32  status_code = 3;
+  }
+
+  message Lte {
+    optional string operator    = 1;
+    optional int32  state       = 2;
+    optional string band        = 3;
+    optional string mode        = 4;
+    optional int32  rssi_dbm    = 5;
+    optional int32  rsrp_dbm    = 6;
+    optional int32  rsrq_db     = 7;
+    optional int32  signal_bars = 8;
+    optional string ipv4        = 9;
+  }
+
+  message Ethernet {
+    optional int32 link_speed_mbps = 1;
+  }
+
+  message Throughput {
+    optional int64 down_bps           = 1;
+    optional int64 up_bps             = 2;
+    optional int32 latency_avg_ms     = 3;
+    optional int32 latency_loss_count = 4;
+  }
+
+  message System {
+    optional int32 cpu_pct    = 1;
+    optional int32 memory_pct = 2;
+  }
+
+  message Client {
+    optional string name            = 1;
+    optional string ip              = 2;
+    optional string mac             = 3;
+    optional string connection      = 4;
+    optional int32  link_speed_mbps = 5;
+    optional int32  uptime_s        = 6;
+  }
+}
