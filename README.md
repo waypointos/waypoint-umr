@@ -108,7 +108,7 @@ builds the `.raw`, signs it with cosign keyless (Sigstore via GitHub Actions
 OIDC, no key to manage), and publishes three assets to the GitHub Release:
 `umr-<version>.raw`, `umr-<version>.raw.cosign`, and `manifest.json`.
 
-    git tag v0.2.0 && git push --tags
+    git tag v0.4.0 && git push --tags
 
 See [SECURITY.md](SECURITY.md) for the cosign verification command and for how
 to report a vulnerability.
